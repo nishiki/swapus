@@ -1,0 +1,14 @@
+language: ruby
+dist: precise
+rvm:
+  - 2.4.2
+  - 2.3.5
+  - 2.2.8
+  - 2.1.10
+install:
+  - bundle install
+  - gem build swapus.gemspec
+  - gem install swapus-$(cat VERSION).gem
+script:
+  - rubocop
+  - swapus
