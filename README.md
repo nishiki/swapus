@@ -1,5 +1,5 @@
 # Swapus
-[![Version](https://img.shields.io/badge/latest_version-1.0.0-green.svg)](https://github.com/nishiki/swapus/releases)
+[![Version](https://img.shields.io/badge/latest_version-1.0.1-green.svg)](https://github.com/nishiki/swapus/releases)
 [![Build Status](https://travis-ci.org/nishiki/swapus.svg?branch=master)](https://travis-ci.org/nishiki/swapus)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](https://github.com/nishiki/swapus/blob/master/LICENSE)
 
