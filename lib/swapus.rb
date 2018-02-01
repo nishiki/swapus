@@ -16,24 +16,33 @@
 # specific language governing permissions and limitations
 # under the License.
 
-$LOAD_PATH << File.expand_path('../../lib', __FILE__)
-
-require 'optparse'
-require 'swapus'
-
-reverse = false
-
-OptionParser.new do |opts|
-  opts.banner = 'Usage: swapus [options]'
-
-  opts.on('-h', '--help', 'Show this message') do
-    puts opts
-    exit 0
+class SwapUsage
+  def initialize(reverse)
+    @processes = {}
+    @reverse   = reverse
   end
 
-  opts.on('-r', '--reverse', 'Reverse the result order') do
-    reverse = true
-  end
-end.parse!
+  def get_processes
+    Dir['/proc/[0-9]*'].map do |pid_dir|
+      pid  = File.basename(pid_dir).to_i
+      cmd  = File.read("#{pid_dir}/cmdline").tr("\x00", ' ').strip
+      swap = File.read("#{pid_dir}/status")[/^VmSwap:\s+([0-9]+)\s+kB$/, 1].to_i
 
-SwapUsage.new(reverse).run
+      @processes[pid] = { cmd: cmd, swap: swap } if swap.positive?
+    end
+  end
+
+  def show
+    @processes = @processes.sort_by { |_, v| v[:swap] }
+    @processes = @processes.reverse if @reverse
+
+    @processes.each do |pid, values|
+      puts "#{values[:swap]} kB [#{pid}] #{values[:cmd]}"
+    end
+  end
+
+  def run
+    get_processes
+    show
+  end
+end
