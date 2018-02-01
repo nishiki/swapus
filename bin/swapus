@@ -34,6 +34,11 @@ OptionParser.new do |opts|
   opts.on('-r', '--reverse', 'Reverse the result order') do
     reverse = true
   end
+
+  opts.on('-v', '--version', 'Show the version') do
+    puts File.read("#{File.dirname(__FILE__)}/../VERSION")
+    exit 0
+  end
 end.parse!
 
 SwapUsage.new(reverse).run

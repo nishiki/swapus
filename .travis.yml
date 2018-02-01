@@ -10,3 +10,4 @@ install:
 script:
   - rubocop
   - swapus
+  - swapus -v | grep $(cat VERSION)
