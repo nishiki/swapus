@@ -1,4 +1,11 @@
 # CHANGELOG
+## v1.1.0 (2018-02-02)
+
+ * feat: add option to reverse the output result
+ * feat: add option to limit the number lines in output
+ * feat: add option to print the program version
+ * chore: add test with ruby 2.5.0
+
 ## v1.0.2 (2018-02-01)
 
  * fix: remove null character
