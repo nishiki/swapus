@@ -21,7 +21,9 @@ $LOAD_PATH << File.expand_path('../../lib', __FILE__)
 require 'optparse'
 require 'swapus'
 
-reverse = false
+options = {
+  reverse: false
+}
 
 OptionParser.new do |opts|
   opts.banner = 'Usage: swapus [options]'
@@ -31,8 +33,12 @@ OptionParser.new do |opts|
     exit 0
   end
 
+  opts.on('-n', '--number N', 'Print the N first lines') do |number|
+    options[:number] = number.to_i
+  end
+
   opts.on('-r', '--reverse', 'Reverse the result order') do
-    reverse = true
+    options[:reverse] = true
   end
 
   opts.on('-v', '--version', 'Show the version') do
@@ -41,4 +47,4 @@ OptionParser.new do |opts|
   end
 end.parse!
 
-SwapUsage.new(reverse).run
+SwapUsage.new(options).run

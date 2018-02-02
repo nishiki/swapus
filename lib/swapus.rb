@@ -17,9 +17,10 @@
 # under the License.
 
 class SwapUsage
-  def initialize(reverse)
+  def initialize(options)
     @processes = {}
-    @reverse   = reverse
+    @reverse   = options[:reverse]
+    @number    = options[:number]
   end
 
   def get_processes
@@ -35,6 +36,7 @@ class SwapUsage
   def show
     @processes = @processes.sort_by { |_, v| v[:swap] }
     @processes = @processes.reverse if @reverse
+    @processes = @processes.first(@number) if @number
 
     @processes.each do |pid, values|
       puts "#{values[:swap]} kB [#{pid}] #{values[:cmd]}"
