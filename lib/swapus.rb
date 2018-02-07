@@ -25,11 +25,15 @@ class SwapUsage
 
   def get_processes
     Dir['/proc/[0-9]*'].map do |pid_dir|
-      pid  = File.basename(pid_dir).to_i
-      cmd  = File.read("#{pid_dir}/cmdline").tr("\x00", ' ').strip
-      swap = File.read("#{pid_dir}/status")[/^VmSwap:\s+([0-9]+)\s+kB$/, 1].to_i
+      begin
+        pid  = File.basename(pid_dir).to_i
+        cmd  = File.read("#{pid_dir}/cmdline").tr("\x00", ' ').strip
+        swap = File.read("#{pid_dir}/status")[/^VmSwap:\s+([0-9]+)\s+kB$/, 1].to_i
 
-      @processes[pid] = { cmd: cmd, swap: swap } if swap.positive?
+        @processes[pid] = { cmd: cmd, swap: swap } if swap.positive?
+      rescue Errno::ENOENT
+        next
+      end
     end
   end
 
