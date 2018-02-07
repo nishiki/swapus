@@ -1,4 +1,8 @@
 # CHANGELOG
+## v1.1.1 (2018-02-07)
+
+ * fix: no raise error if a process is terminated during the swapus execution
+
 ## v1.1.0 (2018-02-02)
 
  * feat: add option to reverse the output result
